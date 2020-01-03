@@ -1,12 +1,13 @@
 package sx.shiragane.imdb.model;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bson.types.ObjectId;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Movie {
+public class Movie  {
 
     private ObjectId id;
     private int IMDbID;
@@ -134,5 +135,16 @@ public class Movie {
             text += MessageFormat.format(" / {0}", String.join(", ", genres));
         }
         return text;
+    }
+
+    public boolean equals(Object other){
+        if (this == other) return true;
+        if (!(other instanceof Movie)) return false;
+        final Movie that = (Movie) other;
+        return this.getIMDbID() == that.getIMDbID();
+    }
+
+    public int hashCode(){
+        return HashCodeBuilder.reflectionHashCode(this, "");
     }
 }
