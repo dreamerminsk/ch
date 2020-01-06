@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Movie  {
+public class Movie {
 
     private ObjectId id;
     private int IMDbID;
@@ -137,14 +137,14 @@ public class Movie  {
         return text;
     }
 
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof Movie)) return false;
         final Movie that = (Movie) other;
         return this.getIMDbID() == that.getIMDbID();
     }
 
-    public int hashCode(){
+    public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, "");
     }
 }

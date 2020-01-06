@@ -1,6 +1,7 @@
 package sx.shiragane.imdb;
 
 
+import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -18,10 +19,13 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.function.Consumer;
 
+import static com.alee.extended.layout.VerticalFlowLayout.TOP;
+
 public class IMDbViewer extends JFrame implements TreeSelectionListener {
     private DefaultListModel<Movie> titlesModel = new DefaultListModel<>();
+    private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 5, 5));
     private JList<Movie> titlesList = new JList<>(titlesModel);
-    private MongoCollection<Movie> imdbTitles = MongoUtils.IMDB_TITLES;
+    private MongoCollection<Movie> imdbTitles = MongoUtils.getImdbTitles();
     private DaysTreeModel daysModel = new DaysTreeModel();
     private JTree daysTree = new JTree(daysModel);
     private LocalDate currentDate = LocalDate.now();
@@ -50,23 +54,27 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         daysTree.setRootVisible(false);
         add(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(daysTree),
-                new JScrollPane(titlesList)), BorderLayout.CENTER);
+                new JScrollPane(titlesPanel)), BorderLayout.CENTER);
         daysTree.addTreeSelectionListener(this);
     }
 
     private void updateTitles() {
         SwingUtilities.invokeLater(() -> {
             titlesModel.clear();
+            titlesPanel.removeAll();
         });
         imdbTitles.find(Filters.eq("release", Date.from(currentDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant())))
                 .forEach((Consumer<? super Movie>) r -> {
                     SwingUtilities.invokeLater(() -> {
                         titlesModel.addElement(r);
+                        titlesPanel.add(new JLabel(r.getTitle()));
                     });
                 });
         SwingUtilities.invokeLater(() -> {
             titlesList.revalidate();
             titlesList.repaint();
+            titlesPanel.revalidate();
+            titlesPanel.repaint();
         });
     }
 

@@ -29,8 +29,13 @@ public class MongoUtils {
     public static final MongoClient mongoClient = MongoClients.create(settings);
     public static final MongoDatabase F_STATS = mongoClient.getDatabase("fStats");
     public static final MongoDatabase IMDB = mongoClient.getDatabase("imdb");
-    public static final MongoCollection<Movie> IMDB_TITLES = IMDB.getCollection("titles", Movie.class);
-    public static final MongoCollection<Name> IMDB_NAMES = IMDB.getCollection("names", Name.class);
 
+    public static MongoCollection<Movie> getImdbTitles() {
+        return IMDB.getCollection("titles", Movie.class);
+    }
+
+    public static MongoCollection<Name> getImdbNames() {
+        return IMDB.getCollection("names", Name.class);
+    }
 
 }

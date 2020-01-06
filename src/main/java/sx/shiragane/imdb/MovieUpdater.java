@@ -21,7 +21,7 @@ import static com.mongodb.client.model.Filters.eq;
 public class MovieUpdater {
 
     public static void main(String... args) {
-        MongoCollection<Movie> titles = MongoUtils.IMDB_TITLES;
+        MongoCollection<Movie> titles = MongoUtils.getImdbTitles();
         titles.find(and(eq("release", null), eq("year", "2020"))).forEach((Consumer<? super Movie>) movie -> {
             String ref = "https://www.imdb.com/title/tt" + movie.getIMDbID();
             try {

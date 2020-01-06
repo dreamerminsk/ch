@@ -26,7 +26,7 @@ public class MovieListParser {
     }
 
     public static void main(String... args) throws IOException {
-        MongoCollection<Movie> titles = MongoUtils.IMDB_TITLES;
+        MongoCollection<Movie> titles = MongoUtils.getImdbTitles();
         MovieListParser p = new MovieListParser();
         String next = ref;
         while (true) {
@@ -35,14 +35,14 @@ public class MovieListParser {
                 System.out.println(m.getTitle());
                 if (titles.find(Filters.eq("iMDbID", m.getIMDbID())).first() != null) {
                     try {
-                        System.out.println("\tUPDATE:" + m.getTitle());
-                        titles.replaceOne(Filters.eq("iMDbID", m.getIMDbID()), m);
-                    } catch (Exception ex) {
+                        //System.out.println("\tUPDATE:" + m.getTitle());
+                        //titles.replaceOne(Filters.eq("iMDbID", m.getIMDbID()), m);
+                    } catch (Exception ignored) {
                     }
                 } else {
                     try {
                         titles.insertOne(m);
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
 
                     }
                 }
@@ -120,7 +120,7 @@ public class MovieListParser {
 
     private void insertName(Name name) {
         try {
-            MongoUtils.IMDB_NAMES.insertOne(name);
+            MongoUtils.getImdbNames().insertOne(name);
         } catch (Exception e) {
 
         }
