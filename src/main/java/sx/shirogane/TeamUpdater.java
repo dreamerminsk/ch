@@ -1,9 +1,9 @@
-package sx.shiragane;
+package sx.shirogane;
 
 import com.mongodb.client.MongoCollection;
 import org.jsoup.nodes.Document;
-import sx.shiragane.utils.MongoUtils;
-import sx.shiragane.utils.OkUtils;
+import sx.shirogane.utils.MongoUtils;
+import sx.shirogane.utils.OkUtils;
 
 import java.io.IOException;
 import java.util.function.Consumer;
