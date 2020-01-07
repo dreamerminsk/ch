@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.model;
+package sx.shirogane.imdb.model;
 
 import org.bson.types.ObjectId;
 import org.jsoup.nodes.Element;
