@@ -1,7 +1,7 @@
-package sx.shiragane.imdb.parsers;
+package sx.shirogane.imdb.parsers;
 
 import org.jsoup.nodes.Document;
-import sx.shiragane.imdb.model.Movie;
+import sx.shirogane.imdb.model.Movie;
 
 import java.io.IOException;
 import java.time.LocalDate;
