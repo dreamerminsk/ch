@@ -2,12 +2,12 @@ package sx.shirogane;
 
 import com.mongodb.client.MongoCollection;
 import org.jsoup.nodes.Document;
-import sx.shiragane.utils.MongoUtils;
+import sx.shirogane.utils.MongoUtils;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static sx.shiragane.utils.OkUtils.getPage;
+import static sx.shirogane.utils.OkUtils.getPage;
 
 public class PlayerParser {
 
