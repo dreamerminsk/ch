@@ -9,19 +9,11 @@ import com.alee.laf.panel.WebPanel;
 import com.alee.managers.style.StyleId;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-<<<<<<< HEAD:src/main/java/sx/shiragane/imdb/IMDbViewer.java
 import org.imgscalr.Scalr;
-import sx.shiragane.imdb.model.Movie;
-import sx.shiragane.imdb.ui.DaysTreeModel;
-import sx.shiragane.imdb.ui.YearMonthDayNode;
-import sx.shiragane.utils.MongoUtils;
-=======
 import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
 import sx.shirogane.imdb.ui.YearMonthDayNode;
 import sx.shirogane.utils.MongoUtils;
->>>>>>> 7d6fbd420a8a5fd3c67bf5fbea836663d97ebf1b:src/main/java/sx/shirogane/imdb/IMDbViewer.java
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
