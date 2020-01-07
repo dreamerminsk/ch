@@ -1,12 +1,7 @@
 package sx.shirogane.imdb;
 
-
-import com.alee.extended.layout.CompactFlowLayout;
 import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
-import com.alee.laf.button.WebButton;
-import com.alee.laf.panel.WebPanel;
-import com.alee.managers.style.StyleId;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.imgscalr.Scalr;
@@ -14,32 +9,29 @@ import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
 import sx.shirogane.imdb.ui.YearMonthDayNode;
 import sx.shirogane.utils.MongoUtils;
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static com.alee.extended.layout.VerticalFlowLayout.TOP;
 
 public class IMDbViewer extends JFrame implements TreeSelectionListener {
+    
+    private static final String VERSION = "v2020-01-07";
+    
     private DefaultListModel<Movie> titlesModel = new DefaultListModel<>();
-    private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 7, 7));
+    private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 5, 5));
     private JList<Movie> titlesList = new JList<>(titlesModel);
     private MongoCollection<Movie> imdbTitles = MongoUtils.getImdbTitles();
     private DaysTreeModel daysModel = new DaysTreeModel();
     private JTree daysTree = new JTree(daysModel);
     private LocalDate currentDate = LocalDate.now();
-    private WebButton reload;
 
     public IMDbViewer() {
         super("IMDbViewer");
@@ -62,17 +54,11 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         //TreeNode yearMonthDayNode = daysModel.getYearMonthDayNode(LocalDate.now());
         //daysTree.expandPath(new TreePath(yearMonthDayNode));
         daysTree.expandRow(0);
-        daysTree.setRootVisible(true);
+        daysTree.setRootVisible(false);
         add(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(daysTree),
                 new JScrollPane(titlesPanel)), BorderLayout.CENTER);
         daysTree.addTreeSelectionListener(this);
-        reload = new WebButton("RELOAD");
-        reload.addActionListener(e -> {
-            daysModel = new DaysTreeModel();
-            daysTree.setModel(daysModel);
-        });
-        add(reload, BorderLayout.NORTH);
     }
 
     private void updateTitles() {
@@ -84,35 +70,7 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
                 .forEach((Consumer<? super Movie>) r -> {
                     SwingUtilities.invokeLater(() -> {
                         titlesModel.addElement(r);
-                        WebPanel content = new WebPanel(new CompactFlowLayout(FlowLayout.LEADING, 7, 7));
-                        JLabel comp = new JLabel(r.getTitle() + " " + r.getYear());
-                        CompletableFuture.supplyAsync(() -> {
-                            try {
-                                return ImageIO.read(new URL(r.getPoster()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        }).thenApply(new Function<BufferedImage, BufferedImage>() {
-                            @Override
-                            public BufferedImage apply(BufferedImage bufferedImage) {
-                                return Scalr.resize(
-                                        bufferedImage,
-                                        Scalr.Method.ULTRA_QUALITY,
-                                        Scalr.Mode.FIT_TO_WIDTH,
-                                        128,
-                                        128);
-                            }
-                        }).thenAccept(icon -> {
-                            SwingUtilities.invokeLater(() -> {
-                                comp.setIcon(new ImageIcon(icon));
-                                comp.repaint();
-                            });
-                        });
-                        content.add(comp);
-                        content.setMargin(7);
-                        content.setStyleId(StyleId.panelDecorated);
-                        titlesPanel.add(content);
+                        titlesPanel.add(new JLabel(r.getTitle()));
                     });
                 });
         SwingUtilities.invokeLater(() -> {
