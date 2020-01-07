@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.ui;
+package sx.shirogane.imdb.ui;
 
 import javax.swing.tree.TreeNode;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.YearMonth;
 import java.util.Map;
 import java.util.TreeMap;
 
-class YearMonthNode extends ComparableTreeNode {
+public class YearMonthNode extends ComparableTreeNode {
 
     private Map<LocalDate, YearMonthDayNode> ymds = new TreeMap<>();
 

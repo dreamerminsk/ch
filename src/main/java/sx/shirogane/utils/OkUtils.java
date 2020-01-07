@@ -1,4 +1,4 @@
-package sx.shiragane.utils;
+package sx.shirogane.utils;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

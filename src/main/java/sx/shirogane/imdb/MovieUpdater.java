@@ -1,11 +1,11 @@
-package sx.shiragane.imdb;
+package sx.shirogane.imdb;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.jsoup.nodes.Document;
-import sx.shiragane.imdb.model.Movie;
-import sx.shiragane.utils.MongoUtils;
-import sx.shiragane.utils.OkUtils;
+import sx.shirogane.imdb.model.Movie;
+import sx.shirogane.utils.MongoUtils;
+import sx.shirogane.utils.OkUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;

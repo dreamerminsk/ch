@@ -1,4 +1,4 @@
-package sx.shiragane;
+package sx.shirogane;
 
 import org.bson.types.ObjectId;
 

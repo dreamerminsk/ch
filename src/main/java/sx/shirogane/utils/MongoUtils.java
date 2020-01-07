@@ -1,4 +1,4 @@
-package sx.shiragane.utils;
+package sx.shirogane.utils;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -8,8 +8,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import sx.shiragane.imdb.model.Movie;
-import sx.shiragane.imdb.model.Name;
+import sx.shirogane.imdb.model.Movie;
+import sx.shirogane.imdb.model.Name;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
