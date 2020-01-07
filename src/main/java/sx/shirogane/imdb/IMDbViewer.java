@@ -34,7 +34,7 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
     private LocalDate currentDate = LocalDate.now();
 
     public IMDbViewer() {
-        super("IMDbViewer");
+        super("IMDbViewer " + VERSION);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setupUI();
