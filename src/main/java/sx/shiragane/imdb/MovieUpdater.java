@@ -15,14 +15,15 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class MovieUpdater {
 
     public static void main(String... args) {
         MongoCollection<Movie> titles = MongoUtils.getImdbTitles();
-        titles.find(and(eq("release", null), eq("year", "2020"))).forEach((Consumer<? super Movie>) movie -> {
+        //titles.find(and(eq("release", null), eq("year", "2020")))
+        titles.find(eq("year", "2020"))
+                .forEach((Consumer<? super Movie>) movie -> {
             String ref = "https://www.imdb.com/title/tt" + movie.getIMDbID();
             try {
                 Document doc = OkUtils.getPage(ref);
@@ -31,6 +32,9 @@ public class MovieUpdater {
                                 .filter(el -> el.attr("href").contains("country_of_origin="))
                                 .map(el -> el.text().trim())
                                 .collect(Collectors.toList()));
+                doc.select("div.poster img").forEach(img->{
+                    movie.setPoster(img.attr("src"));
+                });
                 doc.select("div.subtext a").stream()
                         .filter(el -> el.attr("href").contains("releaseinfo"))
                         .map(el -> {

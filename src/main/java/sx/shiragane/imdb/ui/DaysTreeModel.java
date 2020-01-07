@@ -1,5 +1,6 @@
 package sx.shiragane.imdb.ui;
 
+import com.alee.laf.optionpane.WebOptionPane;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
@@ -37,6 +38,7 @@ public class DaysTreeModel extends DefaultTreeModel {
         AggregateIterable<Document> days = getAggregate();
         List<Document> daysIt = new ArrayList<>();
         days.forEach((Consumer<? super Document>) daysIt::add);
+        WebOptionPane.showMessageDialog(null, "Days: " + daysIt.size());
         daysIt.stream()
                 .filter(d -> d.get("_id") != null)
                 .map(d -> {
