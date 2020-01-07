@@ -1,4 +1,4 @@
-package sx.shiragane;
+package sx.shirogane;
 
 import com.mongodb.client.MongoCollection;
 import org.jsoup.nodes.Document;
