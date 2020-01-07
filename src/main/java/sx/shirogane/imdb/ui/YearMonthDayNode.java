@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.ui;
+package sx.shirogane.imdb.ui;
 
 import java.time.LocalDate;
 
