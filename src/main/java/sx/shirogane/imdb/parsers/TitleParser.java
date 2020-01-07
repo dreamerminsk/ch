@@ -16,11 +16,7 @@ public class TitleParser {
 
     public static Movie parse(Document doc) {
         Movie movie = new Movie();
-        movie.setCountries(
-            doc.select("div#titleDetails a").stream()
-            .filter(el - > el.attr("href").contains("country_of_origin="))
-            .map(el - > el.text().trim())
-            .collect(Collectors.toList()));
+        movie.setCountries(parseCountries(doc));
         doc.select("div.subtext a").stream()
             .filter(el - > el.attr("href").contains("releaseinfo"))
             .map(el - > {
@@ -34,6 +30,13 @@ public class TitleParser {
                 }
             }).filter(Objects::nonNull).findFirst().ifPresent(movie::setRelease);
         return movie;
+    }
+    
+    private static List<String> parseCountries(Document doc) {
+        return doc.select("div#titleDetails a").stream()
+            .filter(el - > el.attr("href").contains("country_of_origin="))
+            .map(el - > el.text().trim())
+            .collect(Collectors.toList())
     }
 
 }
