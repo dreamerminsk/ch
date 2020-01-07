@@ -1,6 +1,5 @@
 package sx.shirogane.imdb;
 
-
 import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
 import com.mongodb.client.MongoCollection;
@@ -23,6 +22,9 @@ import java.util.function.Consumer;
 import static com.alee.extended.layout.VerticalFlowLayout.TOP;
 
 public class IMDbViewer extends JFrame implements TreeSelectionListener {
+    
+    private static final String VERSION = "v2020-01-07";
+    
     private DefaultListModel<Movie> titlesModel = new DefaultListModel<>();
     private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 5, 5));
     private JList<Movie> titlesList = new JList<>(titlesModel);
