@@ -5,6 +5,7 @@ import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import org.imgscalr.Scalr;
 import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
 import sx.shirogane.imdb.ui.YearMonthDayNode;
