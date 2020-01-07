@@ -3,6 +3,15 @@ package sx.shiragane.imdb.parsers;
 import org.jsoup.nodes.Document;
 import sx.shiragane.imdb.model.Movie;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+
 public class TitleParser {
 
     public static Movie parse(Document doc) {
