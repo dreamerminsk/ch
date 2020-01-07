@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.model;
+package sx.shirogane.imdb.model;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bson.types.ObjectId;
