@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.model;
+package sx.shirogane.imdb.model;
 
 import java.util.ArrayList;
 import java.util.List;
