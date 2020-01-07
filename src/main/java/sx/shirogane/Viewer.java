@@ -1,7 +1,7 @@
-package sx.shiragane;
+package sx.shirogane;
 
 import com.mongodb.client.MongoCollection;
-import sx.shiragane.utils.MongoUtils;
+import sx.shiragone.utils.MongoUtils;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
