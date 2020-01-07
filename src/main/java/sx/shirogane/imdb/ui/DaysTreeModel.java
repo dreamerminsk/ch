@@ -1,4 +1,4 @@
-package sx.shiragane.imdb.ui;
+package sx.shirogane.imdb.ui;
 
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.AggregateIterable;
@@ -8,8 +8,8 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
-import sx.shiragane.imdb.model.Movie;
-import sx.shiragane.utils.MongoUtils;
+import sx.shirogane.imdb.model.Movie;
+import sx.shirogane.utils.MongoUtils;
 
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
