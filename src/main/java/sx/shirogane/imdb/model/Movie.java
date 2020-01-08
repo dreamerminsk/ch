@@ -21,6 +21,7 @@ public class Movie {
     private List<Integer> stars;
     private List<String> countries;
     private LocalDate release;
+    private Map<String, LocalDate> releases = new TreeMap<>();
 
     public Movie() {
 
