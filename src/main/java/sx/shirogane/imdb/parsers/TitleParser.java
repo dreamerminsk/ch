@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -30,6 +31,14 @@ public class TitleParser {
                     }
                 }).filter(Objects::nonNull).findFirst().ifPresent(movie::setRelease);
         return movie;
+    }
+
+    private static Optional<String> parseTitle(Document doc) {
+        return doc.select("div.title_wrapper > h1").stream().map(el -> el.ownText().trim()).findFirst();
+    }
+
+    private static Optional<String> parseYear(Document doc) {
+        return doc.select("span#titleYear a").stream().map(el -> el.text().trim()).findFirst();
     }
 
     private static List<String> parseCountries(Document doc) {
