@@ -4,7 +4,6 @@ import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import org.imgscalr.Scalr;
 import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
 import sx.shirogane.imdb.ui.YearMonthDayNode;
@@ -22,12 +21,10 @@ import java.util.function.Consumer;
 import static com.alee.extended.layout.VerticalFlowLayout.TOP;
 
 public class IMDbViewer extends JFrame implements TreeSelectionListener {
-    
+
     private static final String VERSION = "v2020-01-07";
-    
-    private DefaultListModel<Movie> titlesModel = new DefaultListModel<>();
+
     private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 5, 5));
-    private JList<Movie> titlesList = new JList<>(titlesModel);
     private MongoCollection<Movie> imdbTitles = MongoUtils.getImdbTitles();
     private DaysTreeModel daysModel = new DaysTreeModel();
     private JTree daysTree = new JTree(daysModel);
@@ -63,19 +60,15 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
 
     private void updateTitles() {
         SwingUtilities.invokeLater(() -> {
-            titlesModel.clear();
             titlesPanel.removeAll();
         });
         imdbTitles.find(Filters.eq("release", Date.from(currentDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant())))
                 .forEach((Consumer<? super Movie>) r -> {
                     SwingUtilities.invokeLater(() -> {
-                        titlesModel.addElement(r);
                         titlesPanel.add(new JLabel(r.getTitle()));
                     });
                 });
         SwingUtilities.invokeLater(() -> {
-            titlesList.revalidate();
-            titlesList.repaint();
             titlesPanel.revalidate();
             titlesPanel.repaint();
         });
