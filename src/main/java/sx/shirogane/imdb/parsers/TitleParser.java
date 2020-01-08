@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 
 public class TitleParser {
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
+
     public static Movie parse(Document doc) {
         Movie movie = new Movie();
         movie.setCountries(parseCountries(doc));
         doc.select("div.subtext a").stream()
             .filter(el - > el.attr("href").contains("releaseinfo"))
             .map(el - > {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
                 String trim = el.text().trim();
                 String[] dts = trim.split("\\(");
                 try {
