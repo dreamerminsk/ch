@@ -28,6 +28,7 @@ public class DaysTreeModel extends DefaultTreeModel {
     public DaysTreeModel() {
         super(new RootNode());
         CompletableFuture.supplyAsync(MongoUtils::getImdbTitles)
+
                 .thenAccept(this::init).thenRun(() -> {
 
         });
