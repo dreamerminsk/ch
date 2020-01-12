@@ -12,8 +12,12 @@ public class TitlePanel extends WebPanel {
     public TitlePanel(Movie movie) {
         super(new GridBagLayout());
         this.movie = movie;
-        update();
+        setUi();
     }
+    private void setupUi() {
+        
+        update();
+ }
 
     private void update() {
     }
