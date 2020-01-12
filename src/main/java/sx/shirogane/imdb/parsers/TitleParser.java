@@ -18,6 +18,9 @@ public class TitleParser {
 
     public static Movie parse(Document doc) {
         Movie movie = new Movie();
+        parseTitle(doc).ifPresent(title->{
+            movie.setTitle(title);
+        });
         movie.setCountries(parseCountries(doc));
         doc.select("div.subtext a").stream()
                 .filter(el -> el.attr("href").contains("releaseinfo"))
