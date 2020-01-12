@@ -2,7 +2,8 @@ package sx.shirogane.imdb;
 
 import com.alee.extended.layout.VerticalFlowLayout;
 import com.alee.laf.WebLookAndFeel;
-import com.mongodb.client.MongoCollection;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.tree.WebTree;
 import com.mongodb.client.model.Filters;
 import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
@@ -24,10 +25,9 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
 
     private static final String VERSION = "v2020-01-07";
 
-    private JPanel titlesPanel = new JPanel(new VerticalFlowLayout(TOP, 5, 5));
-    private MongoCollection<Movie> imdbTitles = MongoUtils.getImdbTitles();
+    private JPanel titlesPanel = new WebPanel(new VerticalFlowLayout(TOP, 5, 5));
     private DaysTreeModel daysModel = new DaysTreeModel();
-    private JTree daysTree = new JTree(daysModel);
+    private JTree daysTree = new WebTree(daysModel);
     private LocalDate currentDate = LocalDate.now();
 
     public IMDbViewer() {
@@ -51,10 +51,12 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         //TreeNode yearMonthDayNode = daysModel.getYearMonthDayNode(LocalDate.now());
         //daysTree.expandPath(new TreePath(yearMonthDayNode));
         daysTree.expandRow(0);
-        daysTree.setRootVisible(false);
+        daysTree.setRootVisible(true);
+        JScrollPane newRightComponent = new JScrollPane(titlesPanel);
+        newRightComponent.getVerticalScrollBar().setBlockIncrement(64);
         add(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(daysTree),
-                new JScrollPane(titlesPanel)), BorderLayout.CENTER);
+                newRightComponent), BorderLayout.CENTER);
         daysTree.addTreeSelectionListener(this);
     }
 
@@ -62,10 +64,12 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         SwingUtilities.invokeLater(() -> {
             titlesPanel.removeAll();
         });
-        imdbTitles.find(Filters.eq("release", Date.from(currentDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant())))
+        MongoUtils.getImdbTitles().find(Filters.eq("release", Date.from(currentDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant())))
                 .forEach((Consumer<? super Movie>) r -> {
                     SwingUtilities.invokeLater(() -> {
-                        titlesPanel.add(new JLabel(r.getTitle()));
+                        JLabel comp = new JLabel(r.getTitle() + r.getYear());
+                        comp.setFont(comp.getFont().deriveFont(18f));
+                        titlesPanel.add(comp);
                     });
                 });
         SwingUtilities.invokeLater(() -> {
