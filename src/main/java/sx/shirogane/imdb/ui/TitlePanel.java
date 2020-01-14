@@ -1,11 +1,13 @@
 package sx.shirogane.imdb.ui;
 
+import com.alee.extended.layout.CompactFlowLayout;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import sx.shirogane.imdb.model.Movie;
 
 import javax.swing.*;
 import java.awt.*;
+
 
 public class TitlePanel extends WebPanel {
 
@@ -43,7 +45,7 @@ public class TitlePanel extends WebPanel {
         gbc.weightx = 1.0;
         add(year, gbc);
 
-        genres = getGenresPanel(movie.getGenres());
+        genres = new WebPanel(new CompactFlowLayout(FlowLayout.LEFT, 5, 5));
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -65,14 +67,15 @@ public class TitlePanel extends WebPanel {
 
     private void update() {
         title.setText(movie.getTitle());
-        year.setText("(" + movie.getYear() + ") ");
+        year.setText("" + movie.getYear() + " ");
         desc.setText(movie.getDescription());
-    }
-
-    private WebPanel getGenresPanel(List<String> gnrs) {
-        WebPanel p = new WebPanel();
-
-        return p;
+        movie.getGenres().stream().map(t -> {
+            WebLabel l = new WebLabel(t + " ");
+            l.setFontSizeAndStyle(13, Font.ITALIC);
+            return l;
+        }).forEach(l -> {
+            genres.add(l);
+        });
     }
 
 }
