@@ -13,6 +13,7 @@ public class TitlePanel extends WebPanel {
     private WebLabel title;
     private WebLabel year;
     private WebLabel desc;
+    private WebPanel genres;
 
     public TitlePanel(Movie movie) {
         super(new GridBagLayout());
@@ -42,11 +43,19 @@ public class TitlePanel extends WebPanel {
         gbc.weightx = 1.0;
         add(year, gbc);
 
+        genres = getGenresPanel(movie.getGenres());
+        gbc.insets = new Insets(4, 4, 4, 4);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        add(genres, gbc);
+
         desc = new WebLabel();
         desc.setFontSize(12);
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         add(desc, gbc);
@@ -58,6 +67,12 @@ public class TitlePanel extends WebPanel {
         title.setText(movie.getTitle());
         year.setText("(" + movie.getYear() + ") ");
         desc.setText(movie.getDescription());
+    }
+
+    private WebPanel getGenresPanel(List<String> gnrs) {
+        WebPanel p = new WebPanel();
+
+        return p;
     }
 
 }
