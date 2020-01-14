@@ -43,7 +43,7 @@ public class TitlePanel extends WebPanel {
         add(year, gbc);
 
         desc = new WebLabel();
-        desc.setFontSize(10);
+        desc.setFontSize(12);
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.gridx = 0;
         gbc.gridy = 1;
