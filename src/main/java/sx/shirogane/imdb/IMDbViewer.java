@@ -7,6 +7,7 @@ import com.alee.laf.tree.WebTree;
 import com.mongodb.client.model.Filters;
 import sx.shirogane.imdb.model.Movie;
 import sx.shirogane.imdb.ui.DaysTreeModel;
+import sx.shirogane.imdb.ui.TitlePanel;
 import sx.shirogane.imdb.ui.YearMonthDayNode;
 import sx.shirogane.utils.MongoUtils;
 
@@ -67,8 +68,7 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         MongoUtils.getImdbTitles().find(Filters.eq("release", Date.from(currentDate.atStartOfDay().atZone(ZoneId.of("UTC")).toInstant())))
                 .forEach((Consumer<? super Movie>) r -> {
                     SwingUtilities.invokeLater(() -> {
-                        JLabel comp = new JLabel(r.getTitle() + r.getYear());
-                        comp.setFont(comp.getFont().deriveFont(18f));
+                        TitlePanel comp = new TitlePanel(r);
                         titlesPanel.add(comp);
                     });
                 });
