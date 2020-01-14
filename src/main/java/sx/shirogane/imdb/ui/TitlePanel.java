@@ -29,7 +29,6 @@ public class TitlePanel extends WebPanel {
         add(title, gbc);
 
         update();
-        ""
     }
 
     private void update() {
