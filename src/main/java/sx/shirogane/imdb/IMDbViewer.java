@@ -56,6 +56,7 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         daysTree.setRootVisible(true);
         JScrollPane newRightComponent = new JScrollPane(titlesPanel);
         newRightComponent.getVerticalScrollBar().setBlockIncrement(64);
+        newRightComponent.getVerticalScrollBar().setUnitIncrement(64);
         add(new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 new JScrollPane(daysTree),
                 newRightComponent), BorderLayout.CENTER);
