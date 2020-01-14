@@ -29,10 +29,11 @@ public class TitlePanel extends WebPanel {
         title.setFontSize(16);
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_START;
         add(title, gbc);
 
         year = new WebLabel();
-        year.setFontSize(14);
+        year.setFontSizeAndStyle(14, Font.ITALIC);
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -43,7 +44,7 @@ public class TitlePanel extends WebPanel {
 
     private void update() {
         title.setText(movie.getTitle());
-        year.setText(movie.getYear());
+        year.setText("(" + movie.getYear() + ")");
     }
 
 }
