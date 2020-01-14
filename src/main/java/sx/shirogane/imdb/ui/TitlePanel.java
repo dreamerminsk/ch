@@ -26,13 +26,14 @@ public class TitlePanel extends WebPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         title = new WebLabel();
-        title.setFontSize(18);
+        title.setFontSize(16);
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(title, gbc);
 
         year = new WebLabel();
-        year.setFontSize(16);
+        year.setFontSize(14);
+        gbc.insets = new Insets(4, 4, 4, 4);
         gbc.gridx = 1;
         gbc.gridy = 0;
         add(year, gbc);
