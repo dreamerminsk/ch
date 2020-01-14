@@ -12,6 +12,7 @@ public class TitlePanel extends WebPanel {
     private final Movie movie;
     private WebLabel title;
     private WebLabel year;
+    private WebLabel desc;
 
     public TitlePanel(Movie movie) {
         super(new GridBagLayout());
@@ -41,12 +42,22 @@ public class TitlePanel extends WebPanel {
         gbc.weightx = 1.0;
         add(year, gbc);
 
+        desc = new WebLabel();
+        desc.setFontSize(10);
+        gbc.insets = new Insets(4, 4, 4, 4);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        add(desc, gbc);
+
         update();
     }
 
     private void update() {
         title.setText(movie.getTitle());
         year.setText("(" + movie.getYear() + ") ");
+        desc.setText(movie.getDescription());
     }
 
 }

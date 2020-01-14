@@ -52,6 +52,7 @@ public class IMDbViewer extends JFrame implements TreeSelectionListener {
         //TreeNode yearMonthDayNode = daysModel.getYearMonthDayNode(LocalDate.now());
         //daysTree.expandPath(new TreePath(yearMonthDayNode));
         daysTree.expandRow(0);
+        daysTree.expandRow(1);
         daysTree.setRootVisible(true);
         JScrollPane newRightComponent = new JScrollPane(titlesPanel);
         newRightComponent.getVerticalScrollBar().setBlockIncrement(64);
