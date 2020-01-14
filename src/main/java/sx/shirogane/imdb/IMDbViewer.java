@@ -24,7 +24,7 @@ import static com.alee.extended.layout.VerticalFlowLayout.TOP;
 
 public class IMDbViewer extends JFrame implements TreeSelectionListener {
 
-    private static final String VERSION = "v2020-01-07";
+    private static final String VERSION = "v2020-01-14";
 
     private JPanel titlesPanel = new WebPanel(new VerticalFlowLayout(TOP, 5, 5));
     private DaysTreeModel daysModel = new DaysTreeModel();
