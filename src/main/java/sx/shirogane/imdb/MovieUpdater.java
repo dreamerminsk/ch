@@ -9,10 +9,6 @@ import sx.shirogane.utils.MongoUtils;
 import sx.shirogane.utils.OkUtils;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -29,27 +25,10 @@ public class MovieUpdater {
             try {
                 Document doc = OkUtils.getPage(ref);
                 Movie parsedMovie = TitleParser.parse(doc);
-                movie.setCountries(
-                        doc.select("div#titleDetails a").stream()
-                                .filter(el -> el.attr("href").contains("country_of_origin="))
-                                .map(el -> el.text().trim())
-                                .collect(Collectors.toList()));
                 doc.select("div.poster img").forEach(img->{
-                    movie.setPoster(img.attr("src"));
+                    parsedMovie.setPoster(img.attr("src"));
                 });
-                doc.select("div.subtext a").stream()
-                        .filter(el -> el.attr("href").contains("releaseinfo"))
-                        .map(el -> {
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
-                            String trim = el.text().trim();
-                            String[] dts = trim.split("\\(");
-                            try {
-                                return LocalDate.parse(dts[0].trim(), formatter);
-                            } catch (Exception e) {
-                                return null;
-                            }
-                        }).filter(Objects::nonNull).findFirst().ifPresent(movie::setRelease);
-                titles.replaceOne(Filters.eq("iMDbID", movie.getIMDbID()), movie);
+                titles.replaceOne(Filters.eq("iMDbID", movie.getIMDbID()), parsedMovie);
                 System.out.println("\t\t\t" + movie.getTitle() + " " + movie.getYear() + " / " + movie.getRelease());
                 if (movie.getGenres() != null) {
                     System.out.println("\t\t\t" + String.join(", ", movie.getGenres()));

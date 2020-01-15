@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,15 +14,15 @@ public class Movie {
 
     private ObjectId id;
     private int IMDbID;
-    private String title;
-    private String year;
-    private List<String> genres;
-    private String description;
+    private String title = "...Unknown Title...";
+    private String year = "....";
+    private List<String> genres = new ArrayList<>();
+    private String description = "...";
     private String poster;
-    private String status;
-    private List<Integer> directors;
-    private List<Integer> stars;
-    private List<String> countries;
+    private String status = "...";
+    private List<Integer> directors = new ArrayList<>();
+    private List<Integer> stars = new ArrayList<>();
+    private List<String> countries = new ArrayList<>();
     private LocalDate release;
     private Map<String, LocalDate> releases = new TreeMap<>();
 
