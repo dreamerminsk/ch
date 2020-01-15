@@ -22,6 +22,7 @@ public class TitleParser {
         parseYear(doc).ifPresent(movie::setYear);
         movie.setCountries(parseCountries(doc));
         parseRelease(doc).ifPresent(movie::setRelease);
+        parsePoster(doc).ifPresent(movie::setPoster);
         return movie;
     }
 
@@ -52,6 +53,10 @@ public class TitleParser {
                 .filter(el -> el.attr("href").contains("country_of_origin="))
                 .map(el -> el.text().trim())
                 .collect(Collectors.toList());
+    }
+
+    private static Optional<String> parsePoster(Document doc) {
+        return doc.select("div.poster img").stream().map(el-> el.attr("src")).findFirst();
     }
 
 }

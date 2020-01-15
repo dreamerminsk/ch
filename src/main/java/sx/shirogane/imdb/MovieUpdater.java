@@ -25,9 +25,6 @@ public class MovieUpdater {
             try {
                 Document doc = OkUtils.getPage(ref);
                 Movie parsedMovie = TitleParser.parse(doc);
-                doc.select("div.poster img").forEach(img->{
-                    parsedMovie.setPoster(img.attr("src"));
-                });
                 titles.replaceOne(Filters.eq("iMDbID", movie.getIMDbID()), parsedMovie);
                 System.out.println("\t\t\t" + movie.getTitle() + " " + movie.getYear() + " / " + movie.getRelease());
                 if (movie.getGenres() != null) {
