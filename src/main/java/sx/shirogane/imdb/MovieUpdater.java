@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.jsoup.nodes.Document;
 import sx.shirogane.imdb.model.Movie;
+import sx.shirogane.imdb.parsers.TitleParser;
 import sx.shirogane.utils.MongoUtils;
 import sx.shirogane.utils.OkUtils;
 
@@ -27,6 +28,7 @@ public class MovieUpdater {
             String ref = "https://www.imdb.com/title/tt" + movie.getIMDbID();
             try {
                 Document doc = OkUtils.getPage(ref);
+                Movie parsedMovie = TitleParser.parse(doc);
                 movie.setCountries(
                         doc.select("div#titleDetails a").stream()
                                 .filter(el -> el.attr("href").contains("country_of_origin="))

@@ -18,11 +18,19 @@ public class TitleParser {
 
     public static Movie parse(Document doc) {
         Movie movie = new Movie();
-        parseTitle(doc).ifPresent(title->{
-            movie.setTitle(title);
-        });
+        parseTitle(doc).ifPresent(movie::setTitle);
+        parseYear(doc).ifPresent(movie::setYear);
         movie.setCountries(parseCountries(doc));
-        doc.select("div.subtext a").stream()
+        parseRelease(doc).ifPresent(movie::setRelease);
+        return movie;
+    }
+
+    private static Optional<String> parseTitle(Document doc) {
+        return doc.select("div.title_wrapper > h1").stream().map(el -> el.ownText().trim()).findFirst();
+    }
+
+    private static Optional<LocalDate> parseRelease(Document doc) {
+        return doc.select("div.subtext a").stream()
                 .filter(el -> el.attr("href").contains("releaseinfo"))
                 .map(el -> {
                     String trim = el.text().trim();
@@ -32,12 +40,7 @@ public class TitleParser {
                     } catch (Exception e) {
                         return null;
                     }
-                }).filter(Objects::nonNull).findFirst().ifPresent(movie::setRelease);
-        return movie;
-    }
-
-    private static Optional<String> parseTitle(Document doc) {
-        return doc.select("div.title_wrapper > h1").stream().map(el -> el.ownText().trim()).findFirst();
+                }).filter(Objects::nonNull).findFirst();
     }
 
     private static Optional<String> parseYear(Document doc) {

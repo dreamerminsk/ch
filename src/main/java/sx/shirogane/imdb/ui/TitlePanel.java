@@ -66,9 +66,15 @@ public class TitlePanel extends WebPanel {
     }
 
     private void update() {
-        title.setText(movie.getTitle());
-        year.setText("" + movie.getYear() + " ");
-        desc.setText(movie.getDescription());
+        if (movie.getTitle() != null) {
+            title.setText(movie.getTitle());
+        }
+        if (movie.getYear() != null) {
+            year.setText("" + movie.getYear() + " ");
+        }
+        if (movie.getDescription() != null) {
+            desc.setText(movie.getDescription());
+        }
         movie.getGenres().stream().map(t -> {
             WebLabel l = new WebLabel(t + " ");
             l.setFontSizeAndStyle(13, Font.ITALIC);
