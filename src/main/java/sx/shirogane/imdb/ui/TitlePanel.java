@@ -1,5 +1,6 @@
 package sx.shirogane.imdb.ui;
 
+import com.alee.extended.image.WebDecoratedImage;
 import com.alee.extended.layout.CompactFlowLayout;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
@@ -23,7 +24,7 @@ public class TitlePanel extends WebPanel {
     private WebLabel year;
     private WebLabel desc;
     private WebPanel genres;
-    private WebLabel pic;
+    private WebDecoratedImage pic;
 
     public TitlePanel(Movie movie) {
         super(new GridBagLayout());
@@ -37,10 +38,13 @@ public class TitlePanel extends WebPanel {
                 BorderFactory.createTitledBorder("")));
         GridBagConstraints gbc = new GridBagConstraints();
 
-        pic = new WebLabel();
+        pic = new WebDecoratedImage();
+        pic.setDrawGlassLayer(true, true);
+        pic.setRound(5);
+        pic.setShadeWidth(5);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridheight = 2;
+        gbc.gridheight = 3;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(pic, gbc);
 
@@ -101,7 +105,11 @@ public class TitlePanel extends WebPanel {
         CompletableFuture.supplyAsync(() -> Objects.requireNonNull(loadPic(movie.getPoster())))
                 .thenApply(p -> Scalr.resize(p, 128, 128))
                 .thenAccept(p -> {
-                    SwingUtilities.invokeLater(() -> pic.setIcon(new ImageIcon(p)));
+                    SwingUtilities.invokeLater(() -> {
+                        pic.setIcon(new ImageIcon(p));
+                        pic.revalidate();
+                        pic.repaint();
+                    });
                 });
     }
 
