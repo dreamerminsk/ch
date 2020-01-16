@@ -3,10 +3,17 @@ package sx.shirogane.imdb.ui;
 import com.alee.extended.layout.CompactFlowLayout;
 import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
+import org.imgscalr.Scalr;
 import sx.shirogane.imdb.model.Movie;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 
 public class TitlePanel extends WebPanel {
@@ -16,6 +23,7 @@ public class TitlePanel extends WebPanel {
     private WebLabel year;
     private WebLabel desc;
     private WebPanel genres;
+    private WebLabel pic;
 
     public TitlePanel(Movie movie) {
         super(new GridBagLayout());
@@ -29,10 +37,18 @@ public class TitlePanel extends WebPanel {
                 BorderFactory.createTitledBorder("")));
         GridBagConstraints gbc = new GridBagConstraints();
 
-        title = new WebLabel();
-        title.setFontSize(16);
+        pic = new WebLabel();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.insets = new Insets(4, 4, 4, 4);
+        add(pic, gbc);
+
+        title = new WebLabel();
+        title.setFontSize(16);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.anchor = GridBagConstraints.LINE_START;
         add(title, gbc);
@@ -40,14 +56,14 @@ public class TitlePanel extends WebPanel {
         year = new WebLabel();
         year.setFontSizeAndStyle(14, Font.ITALIC);
         gbc.insets = new Insets(4, 4, 4, 4);
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         add(year, gbc);
 
         genres = new WebPanel(new CompactFlowLayout(FlowLayout.LEFT, 5, 5));
         gbc.insets = new Insets(4, 4, 4, 4);
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
@@ -56,7 +72,7 @@ public class TitlePanel extends WebPanel {
         desc = new WebLabel();
         desc.setFontSize(12);
         gbc.insets = new Insets(4, 4, 4, 4);
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
@@ -82,6 +98,21 @@ public class TitlePanel extends WebPanel {
         }).forEach(l -> {
             genres.add(l);
         });
+        CompletableFuture.supplyAsync(() -> Objects.requireNonNull(loadPic(movie.getPoster())))
+                .thenApply(p -> Scalr.resize(p, 128, 128))
+                .thenAccept(p -> {
+                    SwingUtilities.invokeLater(() -> pic.setIcon(new ImageIcon(p)));
+                });
+    }
+
+    private BufferedImage loadPic(String poster) {
+        try {
+            URL url = new URL(poster);
+            return ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
